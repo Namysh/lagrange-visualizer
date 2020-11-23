@@ -1,7 +1,7 @@
 const canvas = document.querySelector('canvas');
-const reset = document.querySelector('li:nth-child(1)');
-const showTip = document.querySelector('li:nth-child(2)');
-const tip = document.querySelector('div');
+const reset = document.getElementById('reset');
+const showTip = document.getElementById('showTip');
+const tip = document.querySelector('.tip');
 
 const context = canvas.getContext('2d');
 const points = [];
