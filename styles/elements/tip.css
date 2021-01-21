@@ -1,0 +1,59 @@
+.tip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  border-radius: 25px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  background-color: rgb(52, 197, 127, 0.9);
+  padding: 25px;
+  animation: tip-appear 0.25s linear forwards;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  will-change: transform;
+  user-select: none;
+}
+
+.tip p {
+  text-align: center;
+}
+
+.tip--hidden {
+  display: none;
+}
+
+.tip .tip__target {
+  color: rgb(0, 0, 0, 0.8);
+}
+
+.tip .tip__action {
+  color: rgb(255, 255, 255, 1);
+  font-weight: 800;
+}
+
+.tip .tip__effect {
+  color: rgb(255, 255, 255, 1);
+}
+
+@keyframes tip-floating {
+  0% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}
+
+@keyframes tip-appear {
+  from {
+    transform: translate3d(31.5vw, -20vw, 0) scale(0.25);
+  }
+  to {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+  }
+}

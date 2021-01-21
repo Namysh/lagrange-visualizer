@@ -1,0 +1,66 @@
+.action-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  margin: 5px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  user-select: none;
+}
+
+.action-bar .action-bar__item {
+  transition: background-color 0.25s;
+  margin: 5px;
+  border-radius: 25px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  background-color: rgb(52, 106, 197);
+  cursor: pointer;
+  padding: 12px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  will-change: transform;
+}
+
+.action-bar .action-bar__item:hover {
+  transition: background-color 0.25s;
+  background-color: rgb(51, 97, 175);
+}
+
+.action-bar__item--hidden {
+  animation: Disappear 0.25s linear forwards;
+}
+
+.action-bar .action-bar__item--secondary {
+  background-color: rgb(52, 197, 127, 0.9);
+  animation: Appear 0.25s linear forwards;
+}
+
+.action-bar__item--unfocusable {
+  pointer-events: none;
+}
+
+.action-bar .action-bar__item--secondary:hover {
+  background-color: rgba(44, 173, 111, 0.9);
+}
+
+@keyframes Appear {
+  from {
+    transform: translate3d(-45vw, 40vh, 0) scale(4);
+  }
+  to {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes Disappear {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-500%, 500%) scale(4);
+    opacity: 0;
+  }
+}
