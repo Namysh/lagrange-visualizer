@@ -18,6 +18,7 @@ const EVENTS = {
   mousemove: 1,
   mousedown: 2,
   mouseup: 3,
+  mouseout: 4,
 };
 
 const CURSORS = {
@@ -36,47 +37,18 @@ class Visualizer {
     this.canvas = find('canvas');
     this.context = this.canvas.getContext('2d');
 
-    find('.action-bar').appendChild(
-      make('li', {
-        className: 'action-bar__item',
-        innerText: 'Reset',
-        onclick: this._handleReset.bind(this),
-      }),
-    );
-
+    this._createActionsButtons();
     this._initActionsEvents();
 
-    this.canvas.addEventListener('mouseout', this._handleMouseOut.bind(this));
-    this.canvas.addEventListener('mousedown', () => {
-      const tip = find('.tip');
-
-      if (tip.classList.contains('tip--hidden')) return;
-
-      tip.classList.add('tip--hidden');
-
-      const showTipButton = find('.action-bar').appendChild(
-        make('li', {
-          className:
-            'action-bar__item action-bar__item--secondary action-bar__item--unfocusable',
-          innerText: 'Tip',
-          onclick: function () {
-            tip.classList.remove('tip--hidden');
-            this.remove();
-          },
-        }),
-      );
-
-      /* After the animation we make the button focusable again */
-      setTimeout(
-        () => showTipButton.classList.remove('action-bar__item--unfocusable'),
-        250,
-      );
-    });
-
     window.addEventListener('resize', this._handleResize.bind(this));
-    this._handleResize();
-
     this._curves.push(new Curve(interpolatingPolynomial.bind(this)));
+    this._handleResize();
+  }
+
+  _handleResize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this._render();
   }
 
   _render() {
@@ -88,6 +60,48 @@ class Visualizer {
       );
       this.points.forEach(point => point.render(this.context));
     }
+  }
+
+  _createActionsButtons() {
+    const actionBar = find('.action-bar');
+    actionBar.appendChild(
+      make('li', {
+        className: 'action-bar__item',
+        innerText: 'Reset',
+        onclick: this._handleReset.bind(this),
+      }),
+    );
+    this.showTipButton = actionBar.appendChild(
+      make('li', {
+        className:
+          'action-bar__item action-bar__item--secondary action-bar__item--hidden',
+        innerText: 'Tip',
+        onclick: this._handleShowTip.bind(this),
+      }),
+    );
+    this.showTipButton.isDisabled = true;
+  }
+
+  _handleReset() {
+    this.points.length = 0;
+    this._render();
+  }
+
+  _handleShowTip() {
+    find('.tip').classList.remove('tip--hidden');
+    this.showTipButton.classList.add('action-bar__item--hidden');
+    this.showTipButton.isDisabled = true;
+  }
+
+  _initActionsEvents() {
+    Object.entries(EVENTS).forEach(([eventName, eventId]) => {
+      this.canvas.addEventListener(eventName, event => {
+        updateCursorStyle(this.canvas, CURSORS[this._action]);
+
+        if (this._actionsHandlers[this._action][eventId])
+          this._actionsHandlers[this._action][eventId](event);
+      });
+    });
   }
 
   _dragMapHandlers = {
@@ -128,6 +142,7 @@ class Visualizer {
       }
       this._action = ACTIONS.default;
     },
+    [EVENTS.mouseout]: () => (this._action = ACTIONS.default),
   };
 
   _dragPointHandlers = {
@@ -135,13 +150,18 @@ class Visualizer {
       this._actionData.hoveredPoint.moveTo(offsetX, offsetY);
       this._render();
     },
-    [EVENTS.mouseup]: () => {
+    [EVENTS.mouseup]: () => (this._action = ACTIONS.default),
+    [EVENTS.mouseout]: () => {
       this._action = ACTIONS.default;
+      this._actionData.hoveredPoint.hover = false;
+      this._render();
     },
   };
 
   _defaultHandlers = {
     [EVENTS.mousedown]: event => {
+      if (this.showTipButton.isDisabled) this._closeTip();
+
       if (this._actionData.hoveredPoint) this._action = ACTIONS.dragPoint;
       else this._action = ACTIONS.dragMap;
 
@@ -163,6 +183,12 @@ class Visualizer {
 
       if (hoveredPoint) this._handleHoverPoint();
     },
+    [EVENTS.mouseout]: () => {
+      if (this._actionData.hoveredPoint) {
+        this._actionData.hoveredPoint.hover = false;
+        this._render();
+      }
+    },
   };
 
   _actionsHandlers = {
@@ -171,24 +197,20 @@ class Visualizer {
     [ACTIONS.default]: this._defaultHandlers,
   };
 
-  _initActionsEvents() {
-    Object.entries(EVENTS).forEach(([eventName, eventId]) => {
-      this.canvas.addEventListener(eventName, event => {
-        updateCursorStyle(this.canvas, CURSORS[this._action]);
+  _closeTip() {
+    this.showTipButton.classList.replace(
+      'action-bar__item--hidden',
+      'action-bar__item--unfocusable',
+    );
+    this.showTipButton.isDisabled = false;
 
-        if (this._actionsHandlers[this._action][eventId])
-          this._actionsHandlers[this._action][eventId](event);
-      });
-    });
-  }
+    find('.tip').classList.add('tip--hidden');
 
-  _handleMouseOut() {
-    this._action = ACTIONS.default;
-
-    if (!this._actionData.hoveredPoint) return;
-
-    this._actionData.hoveredPoint.hover = false;
-    this._render();
+    setTimeout(
+      () =>
+        this.showTipButton.classList.remove('action-bar__item--unfocusable'),
+      1000 / 3,
+    );
   }
 
   _handleHoverPoint() {
@@ -198,17 +220,6 @@ class Visualizer {
       this._actionData.hoveredPoint.hover = true;
       this._render();
     }
-  }
-
-  _handleResize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this._render();
-  }
-
-  _handleReset() {
-    this.points.length = 0;
-    this._render();
   }
 }
 
