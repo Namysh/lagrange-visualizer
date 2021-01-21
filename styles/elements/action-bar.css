@@ -29,13 +29,9 @@
   background-color: rgb(51, 97, 175);
 }
 
-.action-bar__item--hidden {
-  animation: Disappear 0.25s linear forwards;
-}
-
 .action-bar .action-bar__item--secondary {
   background-color: rgb(52, 197, 127, 0.9);
-  animation: Appear 0.25s linear forwards;
+  animation: action-bar__item--appear 0.33s ease-in forwards;
 }
 
 .action-bar__item--unfocusable {
@@ -46,21 +42,12 @@
   background-color: rgba(44, 173, 111, 0.9);
 }
 
-@keyframes Appear {
+@keyframes action-bar__item--appear {
   from {
-    transform: translate3d(-45vw, 40vh, 0) scale(4);
+    transform: translate3d(calc(-50vw + 50%), calc(50vh + 50% - 100px), 0)
+      scale(4);
   }
   to {
     transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes Disappear {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    transform: translate(-500%, 500%) scale(4);
-    opacity: 0;
   }
 }
