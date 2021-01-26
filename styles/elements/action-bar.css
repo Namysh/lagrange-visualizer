@@ -38,10 +38,6 @@
   pointer-events: none;
 }
 
-.action-bar__item--hidden {
-  display: none;
-}
-
 .action-bar .action-bar__item--secondary:hover {
   background-color: rgba(44, 173, 111, 0.9);
 }

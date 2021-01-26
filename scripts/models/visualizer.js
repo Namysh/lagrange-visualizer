@@ -74,12 +74,12 @@ class Visualizer {
     this.showTipButton = actionBar.appendChild(
       make('li', {
         className:
-          'action-bar__item action-bar__item--secondary action-bar__item--hidden',
+          'action-bar__item action-bar__item--secondary',
         innerText: 'Tip',
+        hidden: true,
         onclick: this._handleShowTip.bind(this),
       }),
     );
-    this.showTipButton.isDisabled = true;
   }
 
   _handleReset() {
@@ -88,9 +88,8 @@ class Visualizer {
   }
 
   _handleShowTip() {
-    find('.tip').classList.remove('tip--hidden');
-    this.showTipButton.classList.add('action-bar__item--hidden');
-    this.showTipButton.isDisabled = true;
+    find('.tip').hidden = false;
+    this.showTipButton.hidden = true;
   }
 
   _initActionsEvents() {
@@ -160,7 +159,7 @@ class Visualizer {
 
   _defaultHandlers = {
     [EVENTS.mousedown]: event => {
-      if (this.showTipButton.isDisabled) this._closeTip();
+      if (this.showTipButton.hidden) this._closeTip();
 
       if (this._actionData.hoveredPoint) this._action = ACTIONS.dragPoint;
       else this._action = ACTIONS.dragMap;
@@ -198,13 +197,12 @@ class Visualizer {
   };
 
   _closeTip() {
-    this.showTipButton.classList.replace(
-      'action-bar__item--hidden',
+    find('.tip').hidden = true;
+    this.showTipButton.hidden = false;
+
+    this.showTipButton.classList.add(
       'action-bar__item--unfocusable',
     );
-    this.showTipButton.isDisabled = false;
-
-    find('.tip').classList.add('tip--hidden');
 
     setTimeout(
       () =>
