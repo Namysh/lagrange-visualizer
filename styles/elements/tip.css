@@ -4,9 +4,9 @@
   right: 50%;
   transform: translate(50%, -50%);
   z-index: 10;
-  border-radius: 25px;
+  border-radius: 1.2rem;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  background-color: rgb(52, 197, 127, 0.9);
+  background-color: rgba(50, 50, 50, 1);
   padding: 25px;
   width: 300px;
   animation: tip-appear 0.33s ease-out forwards;
@@ -21,17 +21,16 @@
   text-align: center;
 }
 
-.tip .tip__target {
-  color: rgb(0, 0, 0, 0.8);
+.tip .tip__target { 
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .tip .tip__action {
-  color: rgb(255, 255, 255, 1);
-  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .tip .tip__effect {
-  color: rgb(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 @keyframes tip-appear {

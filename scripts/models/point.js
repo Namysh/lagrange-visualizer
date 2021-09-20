@@ -1,7 +1,7 @@
 const DEFAULT_PARAMS = {
-  color: 'rgb(52, 70, 237)',
-  colorHover: '#2e476b',
-  radius: 8,
+  color: 'rgba(50, 50, 50, 1)',
+  colorHover: 'rgba(0, 0, 0, 1)',
+  radius: 8
 };
 
 class Point {

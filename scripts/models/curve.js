@@ -1,6 +1,6 @@
 const DEFAULT_PARAMS = {
-  thickness: 8,
-  color: '#658abd',
+  thickness: 6,
+  color: 'rgba(124, 124, 124, 1)',
 };
 
 class Curve {

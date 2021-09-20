@@ -13,12 +13,12 @@
 .action-bar .action-bar__item {
   transition: background-color 0.25s;
   margin: 5px;
-  border-radius: 25px;
+  border-radius: 1.2rem;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  background-color: rgb(52, 106, 197);
+  background-color: rgba(50, 50, 50, 1);
   cursor: pointer;
-  padding: 12px;
-  color: white;
+  padding: 0.7rem 1.7rem;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 18px;
   font-weight: bold;
   will-change: transform;
@@ -26,11 +26,11 @@
 
 .action-bar .action-bar__item:hover {
   transition: background-color 0.25s;
-  background-color: rgb(51, 97, 175);
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .action-bar .action-bar__item--secondary {
-  background-color: rgb(52, 197, 127, 0.9);
+  background-color: rgba(50, 50, 50, 1);
   animation: action-bar__item--appear 0.33s ease-in forwards;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .action-bar .action-bar__item--secondary:hover {
-  background-color: rgba(44, 173, 111, 0.9);
+  background-color: rgba(0, 0, 0, 1);
 }
 
 @keyframes action-bar__item--appear {

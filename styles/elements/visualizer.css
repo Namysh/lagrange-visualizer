@@ -6,8 +6,10 @@
 
 .visualizer canvas {
   display: block;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAALklEQVQYV2NkYGBkYGD4z4CgwSyQICpAEmE0ZmD4fxakCEklyAgIgKqEmQsRBABHFAYIytalCgAAAABJRU5ErkJggg==);
-  background-color: #d5d1ff;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAAXNSR0IArs4c6QAAAFdJREFUWEft0jEOACAIQ1E5GifnaDq5uNEQGPzspeQFW4Njg92L8hF92GFvFeDhWrlvGewSu7vviJD15KB07ROivEIxvQP2NFlFAPYKxfQO2NNkFYF/2Q9ALAQgA6Z2kQAAAABJRU5ErkJggg==");
+  /* background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAALklEQVQYV2NkYGBkYGD4z4CgwSyQICpAEmE0ZmD4fxakCEklyAgIgKqEmQsRBABHFAYIytalCgAAAABJRU5ErkJggg==); */
+  /* background-color: #d5d1ff; */
+  background-color: rgba(0, 0, 0, 0.15);
   width: 100%;
   height: 100%;
 }
