@@ -18,7 +18,7 @@ body::before {
   top: 0;
   transform: translate3d(-100%, 0, 0);
   z-index: 10;
-  background-color: rgba(52, 69, 197, 0.75);
+  background-color: rgba(50, 50, 50, 1);
   width: 100vw;
   height: 5px;
   animation: loading-bar 1.25s cubic-bezier(0, 0.46, 1, 0.18);
